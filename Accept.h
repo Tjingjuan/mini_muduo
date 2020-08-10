@@ -14,7 +14,7 @@ using namespace std;
 class IAcceptorCallBack
 {
 public:
-    void virtual newConnection(int sockfd){};
+    void virtual newConnection(int sockfd)=0;
 };
 
 class Accept: public IChannelCallBack{

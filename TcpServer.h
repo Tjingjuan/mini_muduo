@@ -20,6 +20,7 @@
 #include "Channel.h"
 #include "Accept.h"
 #include "TcpConnection.h"
+#include "IMuduoUser.h"
 
 #define MAX_LINE 100
 #define MAX_EVENT 500
@@ -33,6 +34,7 @@ public:
     TcpServer(EventLoop* loop);
     ~TcpServer(){}
     void start();
+    void setCallback(IMuduoUser* pUser);
     virtual void newConnection(int sockfd);
 private:
 //    void updata(Channel* pChannel,int op);
@@ -40,6 +42,7 @@ private:
     struct epoll_event events_[MAX_EVENT];
     map<int,TcpConnection*> connections_;
     Accept* pAcceptor_;
+    IMuduoUser* pUser_;
 };
 
 

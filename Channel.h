@@ -10,7 +10,7 @@
 
 class IChannelCallBack{
 public:
-    void virtual OnIn(int sockfd){};
+    void virtual OnIn(int sockfd)=0;
 };
 
 

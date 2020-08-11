@@ -10,28 +10,11 @@
 
 class IChannelCallBack{
 public:
-    void virtual OnIn(int sockfd)=0;
+//    void virtual OnIn(int sockfd)=0;
+    void virtual handleWrite() = 0;
+    void virtual handleRead() = 0;
 };
 
-
-//class Channel {
-//public:
-//    Channel(int epollfd,int sockfd);
-//    ~Channel();
-//    void setCallBack(IChannelCallBack* callBack);
-//    void handleEvent();
-//    void setRevent(int revent);
-//    int getSockfd();
-//    void enableReading();
-//
-//private:
-//    void updata_();
-//    int epollfd_;
-//    int sockfd_;
-//    int event_;
-//    int revent_;
-//    IChannelCallBack* callBack_;
-//};
 class EventLoop;
 
 class Channel
@@ -45,11 +28,18 @@ public:
     void enableReading();
     int getEvents();
     int getSockfd();
+    /*增加缓冲区功能 */
+    void setIndex(int index){index_ = index;}
+    void enableWriting();
+    void disableWriting();
+    bool isWriting();
+    int getIndex(){return index_;}
 private:
     void update_();
     int sockfd_;
     int events_;
     int revents_;
+    int index_;
     IChannelCallBack* callBack_;
     EventLoop* loop_;
 };

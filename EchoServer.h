@@ -13,7 +13,7 @@ public:
     ~EchoServer(){}
     void start();
     void virtual onConnection(TcpConnection* pConn);
-    void virtual onMessage(TcpConnection* pConn, const string& data);
+    void virtual onMessage(TcpConnection* pConn, string* data);
 
 private:
     EventLoop *ploop_;

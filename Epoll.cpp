@@ -4,6 +4,8 @@
 
 #include "Epoll.h"
 
+const int kNew = -1;
+const int kAdded = 1;
 
 Epoll::Epoll()
 {
@@ -31,11 +33,18 @@ void Epoll::poll(vector<Channel*>* pChannels)
     }
 }
 
-void Epoll::update(Channel* channel)
+void Epoll::update(Channel* pChannel)
 {
     struct epoll_event ev;
-    ev.data.ptr = channel;
-    ev.events = channel->getEvents();
-    int fd = channel->getSockfd();
-    ::epoll_ctl(epollfd_, EPOLL_CTL_ADD, fd, &ev);
+    ev.data.ptr = pChannel;
+    ev.events = pChannel->getEvents();
+    int fd = pChannel->getSockfd();
+
+    int index = pChannel->getIndex();
+    if(index == kNew){
+        pChannel->setIndex(kAdded);
+        ::epoll_ctl(epollfd_, EPOLL_CTL_ADD,fd, &ev);
+    }else{
+        ::epoll_ctl(epollfd_,EPOLL_CTL_MOD,fd,&ev);
+    }
 }

@@ -10,6 +10,7 @@ Channel::Channel(EventLoop* loop, int sockfd)
     ,loop_(loop)
     ,events_(0)
     ,revents_(0)
+    ,index_(-1)
     ,callBack_(nullptr){
 
 }
@@ -23,7 +24,10 @@ void Channel::setRevents(int revents) {
 
 void Channel::handleEvent() {
     if(revents_& EPOLLIN){
-        callBack_->OnIn(sockfd_);
+        callBack_->handleRead();
+    }
+    if(revents_& EPOLLOUT){
+        callBack_->handleWrite();
     }
 }
 
@@ -40,6 +44,22 @@ void Channel::enableReading() {
     update_();
 }
 
+void Channel::enableWriting() {
+    events_ |= EPOLLOUT;
+    update_();
+}
+
+void Channel::disableWriting() {
+    events_ &= ~EPOLLOUT;
+    update_();
+}
+
+bool Channel::isWriting() {
+    return events_ & EPOLLOUT;
+}
+
+
+
 void Channel::update_() {
 //    struct epoll_event ev;
 //    ev.data.ptr = this;
@@ -48,3 +68,5 @@ void Channel::update_() {
     //所有的epoll相关的操作全在Epoll类中管理进行
     loop_->update(this);
 }
+
+/*增加缓冲区功能 */

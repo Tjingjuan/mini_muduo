@@ -24,12 +24,15 @@ public:
     void connectEstablished();
 //    void setCallback(IAcceptorCallBack* pCallback);
     void setUser(IMuduoUser* pUser);
-    void virtual OnIn(int sockfd);
+    void handleRead();
+    void handleWrite();
 private:
     int sockfd_;
     EventLoop* loop_;
     Channel* pChannel_;
     IMuduoUser* pUser_;
+    string* inBuf_;  //写缓冲区
+    string* outBuf_;  //读缓冲区
 };
 
 

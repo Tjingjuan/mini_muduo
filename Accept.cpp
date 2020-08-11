@@ -48,8 +48,8 @@ void Accept::start() {
     pAcceptChannel_->enableReading();
 }
 
-void Accept::OnIn(int sockfd) {
-    cout<<"OnIn:Accept:"<<sockfd<<endl;
+void Accept::handleRead() {
+    cout<<"OnIn:Accept:"<<listenfd_<<endl;
     int connfd;
     struct sockaddr_in cliaddr;
     socklen_t clilen = sizeof(struct sockaddr_in);
@@ -70,4 +70,8 @@ void Accept::OnIn(int sockfd) {
     fcntl(connfd, F_SETFL, O_NONBLOCK); //no-block io
 
     pCallBack_->newConnection(connfd);
+}
+
+void Accept::handleWrite() {
+
 }

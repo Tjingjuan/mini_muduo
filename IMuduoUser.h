@@ -14,7 +14,7 @@ class TcpConnection;
 class IMuduoUser{
 public:
     void virtual onConnection(TcpConnection* pCon) = 0;
-    void virtual onMessage(TcpConnection* pCon, const string& data) = 0;
+    void virtual onMessage(TcpConnection* pCon, string* data) = 0;
 };
 
 #endif //MINI_MUDUO_IMUDUOUSER_H

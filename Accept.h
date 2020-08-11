@@ -22,7 +22,8 @@ public:
     Accept(EventLoop *loop);
     ~Accept(){}
 
-    void virtual OnIn(int socket);
+    void virtual handleRead();
+    void virtual handleWrite();
     void setCallBack(IAcceptorCallBack* pCallBack);
     void start();
 

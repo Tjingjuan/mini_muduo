@@ -18,7 +18,7 @@ public:
     Epoll();
     ~Epoll();
     void poll(vector<Channel*>* pChannels);
-    void update(Channel* channel);
+    void update(Channel* pChannel);
 private:
     int epollfd_;
     struct epoll_event events_[MAX_EVENTS];

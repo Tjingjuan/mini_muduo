@@ -6,6 +6,7 @@
 #define MINI_MUDUO_TCPCONNECTION_H
 #include "Channel.h"
 #include "IMuduoUser.h"
+#include "IRun.h"
 #include <iostream>
 #include <string.h>
 #include <unistd.h>
@@ -15,7 +16,7 @@
 using namespace std;
 //class IAcceptorCallBack;
 
-class TcpConnection: public IChannelCallBack{
+class TcpConnection: public IChannelCallBack, public IRun{
 public:
 public:
     TcpConnection(int sockfd,EventLoop* loop);
@@ -26,13 +27,14 @@ public:
     void setUser(IMuduoUser* pUser);
     void handleRead();
     void handleWrite();
+    void run();
 private:
     int sockfd_;
     EventLoop* loop_;
     Channel* pChannel_;
     IMuduoUser* pUser_;
-    string* inBuf_;  //写缓冲区
-    string* outBuf_;  //读缓冲区
+    Buffer inBuf_;  //写缓冲区
+    Buffer outBuf_;  //读缓冲区
 };
 
 

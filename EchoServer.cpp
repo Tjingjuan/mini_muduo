@@ -19,19 +19,21 @@ void EchoServer::onConnection(TcpConnection *pConn) {
     cout<<" onConnection"<<endl;
 }
 
-void EchoServer::onMessage(TcpConnection *pConn, string *data) {
+void EchoServer::onMessage(TcpConnection *pConn, Buffer* pBuf) {
     cout<<"onmessage"<<endl;
     int i = 0;
-    while(data->size() > MESSAE_LENTH){
-        string  message = data->substr(0,MESSAE_LENTH);
+    while(pBuf->readableBytes() > MESSAE_LENTH){
+        string  message = pBuf->retrieveAsString(MESSAE_LENTH);
         cout<<i++<<":"<<message<<endl;
-        *data = data->substr(MESSAE_LENTH,data->size());
         pConn->send(message+"\n");
     }
-    if(data->size()>0){
-        string  message = data->substr(0,data->size());
+    if(pBuf->readableBytes() >0){
+        string  message = pBuf->retrieveAsString(pBuf->readableBytes());
         cout<<i++<<":"<<message<<endl;
-        *data = string();
         pConn->send(message+"\n");
     }
+}
+void EchoServer::onWriteComplate(TcpConnection* pCon)
+{
+    cout << "onWriteComplate" << endl;
 }

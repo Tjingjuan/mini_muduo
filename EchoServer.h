@@ -6,6 +6,7 @@
 #define MINI_MUDUO_ECHOSERVER_H
 #include "TcpServer.h"
 #include "IMuduoUser.h"
+#include "Buffer.h"
 
 class EchoServer: public IMuduoUser {
 public:
@@ -13,7 +14,8 @@ public:
     ~EchoServer(){}
     void start();
     void virtual onConnection(TcpConnection* pConn);
-    void virtual onMessage(TcpConnection* pConn, string* data);
+    void virtual onMessage(TcpConnection* pConn, Buffer* pBuf);
+    void virtual onWriteComplate(TcpConnection* pCon);
 
 private:
     EventLoop *ploop_;

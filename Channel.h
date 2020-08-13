@@ -8,13 +8,7 @@
 #include <sys/epoll.h>
 #include <iostream>
 
-class IChannelCallBack{
-public:
-//    void virtual OnIn(int sockfd)=0;
-    void virtual handleWrite() = 0;
-    void virtual handleRead() = 0;
-};
-
+class IChannelCallBack;
 class EventLoop;
 
 class Channel
